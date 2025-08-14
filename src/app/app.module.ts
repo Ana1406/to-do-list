@@ -18,8 +18,8 @@ import { environment } from 'src/environments/environment.prod';
   provideRemoteConfig(() => {
     const remoteConfig = getRemoteConfig();
     remoteConfig.defaultConfig = {
-      "showCategories": false, // Asegúrate de que este coincida con tu clave real
-      "item_background_color": "#f0f0f0" // <-- ¡AÑADE ESTE VALOR POR DEFECTO AQUÍ!
+      "showCategories": false,
+      "item_background_color": "#f0f0f0"
     };
 
     remoteConfig.settings.minimumFetchIntervalMillis = 0;

@@ -13,6 +13,5 @@ export class HomePage implements OnInit {
     this.dateToday = today.toLocaleDateString();
   }
   ngOnInit() {
-    // Initialization logic can go here
   }
 }
