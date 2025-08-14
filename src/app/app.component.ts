@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { RouteAppEnum } from './core/enums/route.enum';
 
 @Component({
   selector: 'app-root',
@@ -7,5 +8,10 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  dateToday: string;
+  routes = RouteAppEnum
+  constructor() {
+    const today = new Date();
+    this.dateToday = today.toLocaleDateString();
+  }
 }

@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary" class="ion-text-center">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <ion-grid [fixed]="true">
+        <ion-col class="ion-align-items-center ion-justify-content-center">
+          <ion-row>
+            <h3 class="ion-text-uppercase">To Do List App</h3>
+          </ion-row>
+          <p>Fecha actual: {{ dateToday | date:'longDate' }}</p>
+        </ion-col>
+      </ion-grid>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="ion-text-center ion-padding">
+    <h2>Bienvenidos</h2>
+    <p>Bienvenidos a To Do List App, la manera más efectiva de planificar el dia.</p>
+  </div>
+</ion-content>

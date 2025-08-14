@@ -1,0 +1,46 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button (click)="cancel()">Cerrar</ion-button>
+    </ion-buttons>
+    <ion-title>
+      {{ title}}
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content class="ion-padding">
+  @if(title.includes('Tarea')) { <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input [(ngModel)]="data.title" type="text" placeholder="Título de la tarea"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Categoría</ion-label>
+    <ion-select [(ngModel)]="data.category" placeholder="Selecciona una categoría">
+      <ion-select-option *ngFor="let cat of categories" [value]="cat.name">
+        {{ cat.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
+  }@else{
+  <ion-item>
+    <ion-label position="stacked">Título</ion-label>
+    <ion-input [(ngModel)]="data.name" type="text" placeholder="Título de la Categoría"></ion-input>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Descripción</ion-label>
+    <ion-textarea [(ngModel)]="data.description" placeholder="Añadir Descripción"></ion-textarea>
+  </ion-item>
+  }
+  <ion-footer class="ion-padding" style="margin-top: 50px;">
+    <ion-button expand="block" (click)="confirm()">
+      {{ titleButton }}
+    </ion-button>
+    @if(!add) {
+    <ion-button color="danger" expand="block" (click)="delete()">
+      Eliminar
+    </ion-button>
+    }
+  </ion-footer>
+</ion-content>
