@@ -15,6 +15,7 @@ import { EditDetailModalPage } from './edit-detail-modal.page';
     IonicModule,
     EditDetailModalPageRoutingModule
   ],
-  declarations: [EditDetailModalPage], exports: [EditDetailModalPage]
+  declarations: [EditDetailModalPage],
+  exports: [EditDetailModalPage]
 })
 export class EditDetailModalPageModule { }
