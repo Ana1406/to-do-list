@@ -18,8 +18,17 @@
     <p>Agrega nuevas tareas para comenzar a organizar tu día.</p>
   </div>
   }@else{
+  <ion-item>
+    <ion-label>Categoría</ion-label>
+    <ion-select [(ngModel)]="selectedCategory" (ionChange)="filterTasks()">
+      <ion-select-option value="">Todas</ion-select-option>
+      <ion-select-option *ngFor="let cat of categories" [value]="cat.name">
+        {{ cat.name }}
+      </ion-select-option>
+    </ion-select>
+  </ion-item>
   <ion-list>
-    @for(task of tasks; track task; let i = $index) {
+    @for(task of filteredTasks; track task; let i = $index) {
     <ion-item [ngClass]="{'completed-task': task.completed}" class="ion-margin-vertical" (click)="openModal(task,i)">
       <ion-label>
         <h2 class="title" [ngClass]="{'title  title--completed':task.completed}">{{ task.title }}</h2>
