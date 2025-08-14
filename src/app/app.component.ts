@@ -7,5 +7,9 @@ import { Component } from '@angular/core';
   standalone: false,
 })
 export class AppComponent {
-  constructor() {}
+  dateToday: string;
+  constructor() {
+    const today = new Date();
+    this.dateToday = today.toLocaleDateString();
+  }
 }

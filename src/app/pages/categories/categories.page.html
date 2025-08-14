@@ -1,0 +1,45 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div>
+        <h3 class="ion-text-uppercase">To Do List App</h3>
+        <p>Fecha Actual: {{ dateToday | date:'longDate' }}</p>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  @if(categories.length === 0) {
+  <div class="ion-text-center ion-padding">
+    <h2>No hay categorias disponibles</h2>
+    <p>Agrega nuevas categorias para organizar tus tareas diarias.</p>
+  </div>
+  }@else{
+  <ion-list>
+    @for(category of categories; track category; let i = $index) {
+    <ion-item class="ion-margin-vertical" (click)="openModal(category,i)">
+      <ion-label>
+        <h2 class="title">{{ category.name }}</h2>
+        <p class="category">Descripción: <span class="category-value">{{category.description}}</span>
+        </p>
+      </ion-label>
+    </ion-item>
+    }
+
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más elementos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" title="Agregar nueva categoria">
+    <ion-fab-button color="primary" (click)="openModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+
+</ion-content>

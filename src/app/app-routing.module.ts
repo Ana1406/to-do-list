@@ -2,19 +2,21 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
   {
-    path: 'home',
-    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+    path: 'tasks',
+    loadChildren: () => import('./pages/tasks/tasks.module').then(m => m.TasksPageModule)
   },
   {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
+    path: 'categories',
+    loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesPageModule)
+  },  {
+    path: 'edit-detail-modal',
+    loadChildren: () => import('./components/edit-detail-modal/edit-detail-modal.module').then( m => m.EditDetailModalPageModule)
   },
-  {
-    path: 'task-detail-modal',
-    loadChildren: () => import('./components/task-detail-modal/task-detail-modal.module').then( m => m.TaskDetailModalPageModule)
-  },
+
+
+
 ];
 
 @NgModule({
