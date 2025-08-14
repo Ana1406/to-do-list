@@ -15,7 +15,7 @@
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Categoria</ion-label>
+    <ion-label position="stacked">Categoría</ion-label>
     <ion-select [(ngModel)]="data.category" placeholder="Selecciona una categoría">
       <ion-select-option *ngFor="let cat of categories" [value]="cat.name">
         {{ cat.name }}
@@ -25,19 +25,19 @@
   }@else{
   <ion-item>
     <ion-label position="stacked">Título</ion-label>
-    <ion-input [(ngModel)]="data.name" type="text" placeholder="Título de la Categoria"></ion-input>
+    <ion-input [(ngModel)]="data.name" type="text" placeholder="Título de la Categoría"></ion-input>
   </ion-item>
 
   <ion-item>
-    <ion-label position="stacked">Descripcion</ion-label>
-    <ion-textarea [(ngModel)]="data.description" placeholder="Añadir Descripcion"></ion-textarea>
+    <ion-label position="stacked">Descripción</ion-label>
+    <ion-textarea [(ngModel)]="data.description" placeholder="Añadir Descripción"></ion-textarea>
   </ion-item>
   }
-  <ion-footer class="ion-padding">
+  <ion-footer class="ion-padding" style="margin-top: 50px;">
     <ion-button expand="block" (click)="confirm()">
       {{ titleButton }}
     </ion-button>
-    @if(titleButton === 'Actualizar') {
+    @if(!add) {
     <ion-button color="danger" expand="block" (click)="delete()">
       Eliminar
     </ion-button>

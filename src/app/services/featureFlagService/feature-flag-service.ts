@@ -12,13 +12,10 @@ export class FeatureFlagService {
   }
 
   isCategoriesEnabled(): boolean {
-    // Usar getValue(...).asBoolean() evita problemas de import
     return getValue(this.rc, 'showCategories').asBoolean();
   }
 
   getItemBackgroundColor(): string {
-    // rc.getValue() es el método en la instancia inyectada.
-    // Asegúrate de que 'item_background_color' sea la clave que usarás en la consola de Firebase.
     return getValue(this.rc, 'item_background_color').asString();
 
   }
