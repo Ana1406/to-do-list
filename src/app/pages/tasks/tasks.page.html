@@ -1,0 +1,53 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-menu-button menu="mainMenu"></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      <div>
+        <h3 class="ion-text-uppercase">To Do List App</h3>
+        <p>Fecha Actual: {{ dateToday | date:'longDate' }}</p>
+      </div>
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content [fullscreen]="true">
+  @if(tasks.length === 0) {
+  <div class="ion-text-center ion-padding">
+    <h2>No hay tareas disponibles</h2>
+    <p>Agrega nuevas tareas para comenzar a organizar tu día.</p>
+  </div>
+  }@else{
+  <ion-list>
+    @for(task of tasks; track task; let i = $index) {
+    <ion-item [ngClass]="{'completed-task': task.completed}" class="ion-margin-vertical" (click)="openModal(task,i)">
+      <ion-label>
+        <h2 class="title" [ngClass]="{'title  title--completed':task.completed}">{{ task.title }}</h2>
+        <p class="category" [ngClass]="{'title  title--completed':task.completed}">Categoría: <span
+            [ngClass]="{'title  title--completed':task.completed}" class="category-value">{{task.category}}</span></p>
+      </ion-label>
+      <ion-checkbox slot="end" (click)="$event.stopPropagation()" [(ngModel)]="task.completed"
+        (onChange)="changeStateTask(task)"></ion-checkbox>
+    </ion-item>
+    }
+
+  </ion-list>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más elementos...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  }
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" title="Agregar nueva tarea">
+    <ion-fab-button color="primary" (click)="openModal()">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" style="margin-bottom: 70px;"
+    title="Eliminar todas las tareas">
+    <ion-fab-button color="danger" (click)="deleteAllTask()">
+      <ion-icon name="trash"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
+
+</ion-content>

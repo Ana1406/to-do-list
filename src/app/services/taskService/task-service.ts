@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { StorageService } from '../storageService/storage-service';
-import { TaskModel } from 'src/app/models/task.model';
+import { TaskModel } from 'src/app/core/models/task.model';
 
 @Injectable({
   providedIn: 'root'
