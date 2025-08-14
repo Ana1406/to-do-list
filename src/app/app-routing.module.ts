@@ -10,10 +10,8 @@ const routes: Routes = [
   {
     path: 'categories',
     loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesPageModule)
-  },  {
-    path: 'edit-detail-modal',
-    loadChildren: () => import('./components/edit-detail-modal/edit-detail-modal.module').then( m => m.EditDetailModalPageModule)
   },
+
 
 
 

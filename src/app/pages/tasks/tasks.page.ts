@@ -2,7 +2,9 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { EditDetailModalPage } from 'src/app/components/edit-detail-modal/edit-detail-modal.page';
 import { ModalsEnum } from 'src/app/core/enums/modals.enum';
+import { Category } from 'src/app/core/models/categories.model';
 import { TaskModel } from 'src/app/core/models/task.model';
+import { CategoryService } from 'src/app/services/categoryService/category-service';
 import { TaskService } from 'src/app/services/taskService/task-service';
 
 @Component({
@@ -13,25 +15,42 @@ import { TaskService } from 'src/app/services/taskService/task-service';
 export class TasksPage implements OnInit {
   tasks: TaskModel[] = [];
   allTasks: TaskModel[] = [];
+  filteredTasks: TaskModel[] = [];
   newTaskTitle: string = '';
   loadBatchSize = 10;   // Cantidad a cargar por scroll
   loadedCount = 0;
   dateToday: string;
   modalsEnum = ModalsEnum;
-  constructor(private taskService: TaskService, private modalCtrl: ModalController, private cd: ChangeDetectorRef) {
+  selectedCategory: string = '';
+  categories: Category[] = [];
+  constructor(private taskService: TaskService, private modalCtrl: ModalController, private cd: ChangeDetectorRef, private categoryService: CategoryService) {
     const today = new Date();
     this.dateToday = today.toLocaleDateString();
   }
 
   async ngOnInit() {
-    this.allTasks = await this.taskService.getTasks();
-    //this.newTaskTitle = 'prueba1';
-    //this.addTask()
+    this.categories = await this.categoryService.getCategories();
+    await this.loadTasks();
     this.loadMore();
   }
   trackByIndex(index: number, item: any): number {
     return index;
   }
+  filterTasks() {
+    if (!this.selectedCategory) {
+      this.filteredTasks = [...this.tasks];
+    } else {
+      this.filteredTasks = this.tasks.filter(
+        task => task.category === this.selectedCategory
+      );
+    }
+  }
+
+  async loadTasks() {
+    this.tasks = await this.taskService.getTasks();
+    this.filteredTasks = [...this.tasks];
+  }
+
   async addTask() {
     console.log('Adding task:', this.newTaskTitle);
     if (this.newTaskTitle.trim().length > 0) {
