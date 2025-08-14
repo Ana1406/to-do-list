@@ -5,6 +5,7 @@ import { ModalsEnum } from 'src/app/core/enums/modals.enum';
 import { Category } from 'src/app/core/models/categories.model';
 import { TaskModel } from 'src/app/core/models/task.model';
 import { CategoryService } from 'src/app/services/categoryService/category-service';
+import { FeatureFlagService } from 'src/app/services/featureFlagService/feature-flag-service';
 import { TaskService } from 'src/app/services/taskService/task-service';
 
 @Component({
@@ -22,13 +23,27 @@ export class TasksPage implements OnInit {
   dateToday: string;
   modalsEnum = ModalsEnum;
   selectedCategory: string = '';
+  showCategories = false;
+  itemBackgroundColor: string = '#ffffff'; // <-- ¡Mantiene esta propiedad!
   categories: Category[] = [];
-  constructor(private taskService: TaskService, private modalCtrl: ModalController, private cd: ChangeDetectorRef, private categoryService: CategoryService) {
+  constructor(private taskService: TaskService,
+    private modalCtrl: ModalController,
+    private cd: ChangeDetectorRef,
+    private categoryService: CategoryService,
+    private featureFlagService: FeatureFlagService) {
     const today = new Date();
     this.dateToday = today.toLocaleDateString();
   }
 
   async ngOnInit() {
+    await this.featureFlagService.loadFlags();
+    this.showCategories = this.featureFlagService.isCategoriesEnabled();
+    console.log('Feature flag for categories:', this.showCategories);
+    this.itemBackgroundColor = this.featureFlagService.getItemBackgroundColor();
+    console.log('Item background color from Remote Config:', this.itemBackgroundColor); // Para depurar
+
+
+
     this.categories = await this.categoryService.getCategories();
     await this.loadTasks();
     this.loadMore();
