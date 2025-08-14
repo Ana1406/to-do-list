@@ -1,0 +1,35 @@
+.completed-task {
+    border: var(--ion-border-completed-task) !important;
+    background-color: var(--ion-color-completed-background) !important;
+    color: var(--ion-color-text) !important;
+}
+
+.title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: var(--ion-color-text) !important;
+
+    &--completed {
+        color: var(--ion-color-completed-text) !important;
+    }
+}
+
+.category {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--ion-color-category-text) !important;
+
+    &--completed {
+        color: var(--ion-color-completed-text) !important;
+    }
+}
+
+.category-value {
+    font-weight: bold;
+    color: var(--ion-color-text) !important;
+    font-size: 1rem;
+
+    &--completed {
+        color: var(--ion-color-completed-text) !important;
+    }
+}

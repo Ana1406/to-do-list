@@ -14,24 +14,28 @@ export class CategoriesPage implements OnInit {
   categories: Category[] = [];
   allCategories: Category[] = [];
   newTaskTitle: string = '';
-  loadBatchSize = 10;   // Cantidad a cargar por scroll
+  loadBatchSize = 10;
   loadedCount = 0;
   dateToday: string;
   modalsEnum = ModalsEnum;
-  constructor(private categoryService: CategoryService, private modalCtrl: ModalController, private cd: ChangeDetectorRef) {
+
+  constructor(
+    private categoryService: CategoryService,
+    private modalCtrl: ModalController,
+    private cd: ChangeDetectorRef) {
     const today = new Date();
     this.dateToday = today.toLocaleDateString();
   }
 
   async ngOnInit() {
     this.allCategories = await this.categoryService.getCategories();
-    //this.newTaskTitle = 'prueba1';
-    //this.addTask()
     this.loadMore();
   }
+
   trackByIndex(index: number, item: any): number {
     return index;
   }
+
   async addTask() {
     console.log('Adding task:', this.newTaskTitle);
     if (this.newTaskTitle.trim().length > 0) {
@@ -55,15 +59,17 @@ export class CategoriesPage implements OnInit {
   async openModal(category?: Category, indexCategory?: number) {
     const modal = await this.modalCtrl.create({
       component: EditDetailModalPage,
-      componentProps: { typeModal: this.modalsEnum.CATEGORY_DETAIL_MODAL, data: category, index: indexCategory, countCategories: this.allCategories.length },
+      componentProps: {
+        typeModal: this.modalsEnum.CATEGORY_DETAIL_MODAL,
+        data: category,
+        index: indexCategory,
+        countCategories: this.allCategories.length, add: category === undefined
+      },
 
     });
 
     await modal.present();
-
-    // Esperar hasta que se cierre el modal
     const { data } = await modal.onDidDismiss();
-
     if (data?.updated) {
       this.allCategories = await this.categoryService.getCategories();
       this.categories = [];
@@ -73,6 +79,7 @@ export class CategoriesPage implements OnInit {
     }
 
   }
+
   loadMore(event?: any) {
     const nextBatch = this.allCategories.slice(this.loadedCount, this.loadedCount + this.loadBatchSize);
     this.categories = [...this.categories, ...nextBatch];

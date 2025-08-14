@@ -38,12 +38,7 @@ export class TasksPage implements OnInit {
   async ngOnInit() {
     await this.featureFlagService.loadFlags();
     this.showCategories = this.featureFlagService.isCategoriesEnabled();
-    console.log('Feature flag for categories:', this.showCategories);
     this.itemBackgroundColor = this.featureFlagService.getItemBackgroundColor();
-    console.log('Item background color from Remote Config:', this.itemBackgroundColor); // Para depurar
-
-
-
     this.categories = await this.categoryService.getCategories();
     await this.loadTasks();
     this.loadMore();
@@ -95,15 +90,18 @@ export class TasksPage implements OnInit {
 
   changeStateTask(task: TaskModel) {
     task.completed = !task.completed;
-    console.log('Cambio de estado de tarea');
     this.taskService.updateTask(this.tasks.indexOf(task), task)
 
   }
   async openModal(task?: TaskModel, indexTask?: number) {
     const modal = await this.modalCtrl.create({
       component: EditDetailModalPage,
-      componentProps: { typeModal: this.modalsEnum.TASK_DETAIL_MODAL, data: task, index: indexTask },
-
+      componentProps: {
+        typeModal: this.modalsEnum.TASK_DETAIL_MODAL,
+        data: task,
+        index: indexTask,
+        add: task === undefined
+      },
     });
 
     await modal.present();
@@ -113,6 +111,7 @@ export class TasksPage implements OnInit {
 
     if (data?.updated) {
       this.allTasks = await this.taskService.getTasks();
+      await this.loadTasks();
       this.tasks = [];
       this.loadedCount = 0;
       this.loadMore();

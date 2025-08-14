@@ -16,6 +16,7 @@ export class EditDetailModalPage implements OnInit {
   @Input() data!: any;
   @Input() index: number = 0;
   @Input() countCategories: number = 0;
+  @Input() add: boolean = false;
   categories: Category[] = [];
 
   constructor(private modalCtrl: ModalController, private taskService: TaskService, private categoryService: CategoryService) { }
@@ -29,14 +30,15 @@ export class EditDetailModalPage implements OnInit {
           category: '',
           completed: false
         } as TaskModel;
-      } else {
       }
     } else {
-      this.data = {
-        id: this.countCategories + 1,
-        name: '',
-        description: ''
-      } as Category;
+      if (!this.data) {
+        this.data = {
+          id: this.countCategories + 1,
+          name: '',
+          description: ''
+        } as Category;
+      }
     }
   }
 
@@ -48,7 +50,7 @@ export class EditDetailModalPage implements OnInit {
     }
   }
   get titleButton() {
-    return this.data?.name || this.data?.title ? 'Actualizar' : 'Guardar'
+    return !this.add ? 'Actualizar' : 'Guardar'
   }
 
   closeModal() {
