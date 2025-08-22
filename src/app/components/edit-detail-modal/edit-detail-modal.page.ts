@@ -7,7 +7,8 @@ import { CategoryService } from 'src/app/services/categoryService/category-servi
 import { TaskService } from 'src/app/services/taskService/task-service';
 
 @Component({
-  selector: 'app-edit-detail-modal', standalone: false,
+  selector: 'app-edit-detail-modal',
+  standalone: false,
   templateUrl: './edit-detail-modal.page.html',
   styleUrls: ['./edit-detail-modal.page.scss'],
 })
@@ -23,6 +24,7 @@ export class EditDetailModalPage implements OnInit {
 
   async ngOnInit() {
     this.categories = await this.categoryService.getCategories();
+
     if (this.typeModal === ModalsEnum.TASK_DETAIL_MODAL) {
       if (!this.data) {
         this.data = {
@@ -31,7 +33,7 @@ export class EditDetailModalPage implements OnInit {
           completed: false
         } as TaskModel;
       }
-    } else {
+    } else if (this.typeModal === ModalsEnum.CATEGORY_DETAIL_MODAL) {
       if (!this.data) {
         this.data = {
           id: this.countCategories + 1,
@@ -42,6 +44,7 @@ export class EditDetailModalPage implements OnInit {
     }
   }
 
+
   get title() {
     if (this.typeModal === ModalsEnum.TASK_DETAIL_MODAL) {
       return this.data?.title ? 'Editar Tarea' : 'Adicionar Tarea';
@@ -50,8 +53,9 @@ export class EditDetailModalPage implements OnInit {
     }
   }
   get titleButton() {
-    return !this.add ? 'Actualizar' : 'Guardar'
+    return (this.data?.name || this.data?.title) ? 'Actualizar' : 'Guardar';
   }
+
 
   closeModal() {
     this.modalCtrl.dismiss();

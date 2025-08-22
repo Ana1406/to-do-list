@@ -39,6 +39,9 @@ export class TasksPage implements OnInit {
     await this.featureFlagService.loadFlags();
     this.showCategories = this.featureFlagService.isCategoriesEnabled();
     this.itemBackgroundColor = this.featureFlagService.getItemBackgroundColor();
+
+
+
     this.categories = await this.categoryService.getCategories();
     await this.loadTasks();
     this.loadMore();

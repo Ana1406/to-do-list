@@ -16,7 +16,7 @@ export class CategoriesPage implements OnInit {
   newCategoryTitle: string = '';
   loadBatchSize = 10;
   loadedCount = 0;
-  dateToday: string;
+  dateToday: Date;
   modalsEnum = ModalsEnum;
 
   constructor(
@@ -24,7 +24,7 @@ export class CategoriesPage implements OnInit {
     private modalCtrl: ModalController,
     private cd: ChangeDetectorRef) {
     const today = new Date();
-    this.dateToday = today.toLocaleDateString();
+    this.dateToday = new Date();
   }
 
   async ngOnInit() {
@@ -35,19 +35,18 @@ export class CategoriesPage implements OnInit {
   trackByIndex(index: number, item: any): number {
     return index;
   }
+  async addTask() {
 
-  async addCategory() {
-    if (this.newCategoryTitle.trim().length > 0) {
-      const newCategory: Category = {
-        id: this.allCategories.length + 1,
-        name: '',
-        description: ''
-      };
+    const newCategory: Category = {
+      id: this.allCategories.length + 1,
+      name: '',
+      description: ''
+    };
 
-      await this.categoryService.addCategory(newCategory);
-      this.allCategories = await this.categoryService.getCategories();
-      this.newCategoryTitle = '';
-    }
+    await this.categoryService.addCategory(newCategory);
+    this.allCategories = await this.categoryService.getCategories();
+    this.newCategoryTitle = '';
+
   }
 
   async deleteCategory(index: number) {
