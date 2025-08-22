@@ -3,7 +3,6 @@ import { FeatureFlagService } from './feature-flag-service';
 import { RemoteConfig } from '@angular/fire/remote-config';
 
 class RemoteConfigMock {
-  // Simula fetchAndActivate y getValue
   constructor() { }
 }
 
@@ -28,5 +27,4 @@ describe('FeatureFlagService', () => {
     expect(service).toBeTruthy();
   });
 
-  // Aquí puedes espiar métodos de rcMock para simular fetchAndActivate/getValue
 });

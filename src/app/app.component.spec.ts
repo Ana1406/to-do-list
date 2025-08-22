@@ -10,7 +10,7 @@ describe('AppComponent', () => {
       declarations: [AppComponent],
       imports: [IonicModule.forRoot()],
       providers: [
-        provideRouter([]) // rutas vacías, mock del router
+        provideRouter([])
       ],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
     }).compileComponents();

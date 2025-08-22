@@ -4,9 +4,7 @@ import { CategoryService } from 'src/app/services/categoryService/category-servi
 import { ModalController, IonicModule } from '@ionic/angular';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
-// ------------------------
-// Mock de CategoryService
-// ------------------------
+
 class MockCategoryService {
   categories = [{ id: 1, name: 'Test Cat', description: 'Desc' }];
   getCategories = jasmine.createSpy('getCategories').and.returnValue(Promise.resolve(this.categories));
@@ -14,9 +12,7 @@ class MockCategoryService {
   deleteCategory = jasmine.createSpy('deleteCategory').and.returnValue(Promise.resolve());
 }
 
-// ------------------------
-// Mock de ModalController
-// ------------------------
+
 class MockModalController {
   create = jasmine.createSpy('create').and.callFake(() => {
     return Promise.resolve({
@@ -39,9 +35,7 @@ describe('CategoriesPage', () => {
         { provide: CategoryService, useClass: MockCategoryService },
         { provide: ModalController, useClass: MockModalController }
       ],
-      schemas: [ /* Esto evita errores por componentes Ionic no declarados */
-        // CUSTOM_ELEMENTS_SCHEMA permite ignorar tags como <ion-fab>, <ion-icon>, etc.
-        // Así no necesitas declarar mocks manuales.
+      schemas: [
         CUSTOM_ELEMENTS_SCHEMA
       ]
     }).compileComponents();
@@ -50,7 +44,6 @@ describe('CategoriesPage', () => {
     component = fixture.componentInstance;
     categoryService = TestBed.inject(CategoryService) as any;
 
-    // Evitar ejecución real de loadMore() durante la creación inicial
     spyOn(component, 'loadMore').and.callFake(() => { });
 
     fixture.detectChanges();
@@ -75,6 +68,6 @@ describe('CategoriesPage', () => {
 
     await component.openModal();
     tick();
-    expect(categoryService.getCategories).toHaveBeenCalledTimes(2); // init + refresh after modal
+    expect(categoryService.getCategories).toHaveBeenCalledTimes(2);
   }));
 });

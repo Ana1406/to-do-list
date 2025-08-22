@@ -8,8 +8,8 @@ describe('TaskService', () => {
   let storageServiceSpy: jasmine.SpyObj<StorageService>;
 
   const mockTasks: TaskModel[] = [
-    { title: 'Tarea 1', completed: false, category: '' },
-    { title: 'Tarea 2', completed: true, category: '' }
+    { title: 'Task 1', completed: false, category: '' },
+    { title: 'Task 2', completed: true, category: '' }
   ];
 
   beforeEach(() => {
@@ -26,31 +26,31 @@ describe('TaskService', () => {
     storageServiceSpy = TestBed.inject(StorageService) as jasmine.SpyObj<StorageService>;
   });
 
-  it('debería crearse el servicio', () => {
+  it('should create service', () => {
     expect(service).toBeTruthy();
   });
 
-  it('debería obtener las tareas almacenadas', async () => {
+  it('should get the stored tasks', async () => {
     storageServiceSpy.getValue.and.returnValue(Promise.resolve(mockTasks));
 
     const tasks = await service.getTasks();
 
     expect(tasks.length).toBe(2);
-    expect(tasks[0].title).toBe('Tarea 1');
+    expect(tasks[0].title).toBe('Task 1');
     expect(storageServiceSpy.getValue).toHaveBeenCalledWith('tasks');
   });
 
-  it('debería adicionar una tarea', async () => {
+  it('should add a task', async () => {
     storageServiceSpy.getValue.and.returnValue(Promise.resolve([...mockTasks]));
     storageServiceSpy.setValue.and.returnValue(Promise.resolve());
 
-    const newTask: TaskModel = { title: 'Tarea 3', completed: false, category: '' };
+    const newTask: TaskModel = { title: 'Task 3', completed: false, category: '' };
     await service.addTask(newTask);
 
     expect(storageServiceSpy.setValue).toHaveBeenCalledWith('tasks', [...mockTasks, newTask]);
   });
 
-  it('debería eliminar una tarea por índice', async () => {
+  it('should delete task by index', async () => {
     storageServiceSpy.getValue.and.returnValue(Promise.resolve([...mockTasks]));
     storageServiceSpy.setValue.and.returnValue(Promise.resolve());
 
@@ -59,17 +59,17 @@ describe('TaskService', () => {
     expect(storageServiceSpy.setValue).toHaveBeenCalledWith('tasks', [mockTasks[1]]);
   });
 
-  it('debería actualizar una tarea por índice', async () => {
+  it('should update a task by index', async () => {
     storageServiceSpy.getValue.and.returnValue(Promise.resolve([...mockTasks]));
     storageServiceSpy.setValue.and.returnValue(Promise.resolve());
 
-    const updatedTask: TaskModel = { title: 'Tarea 1 editada', completed: true, category: '' };
+    const updatedTask: TaskModel = { title: 'Task 1 edit', completed: true, category: '' };
     await service.updateTask(0, updatedTask);
 
     expect(storageServiceSpy.setValue).toHaveBeenCalledWith('tasks', [updatedTask, mockTasks[1]]);
   });
 
-  it('debería eliminar todas las tareas', async () => {
+  it('should delete all tasks', async () => {
     storageServiceSpy.removeValue.and.returnValue(await Promise.resolve());
 
     await service.deleteAllTasks();

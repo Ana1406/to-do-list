@@ -51,9 +51,6 @@ describe('EditDetailModalPage', () => {
     component = fixture.componentInstance;
   });
 
-  // ------------------------
-  // TASK_DETAIL_MODAL tests
-  // ------------------------
   describe('TASK_DETAIL_MODAL when data not provided', () => {
     beforeEach(async () => {
       component.typeModal = ModalsEnum.TASK_DETAIL_MODAL;
@@ -100,9 +97,6 @@ describe('EditDetailModalPage', () => {
     });
   });
 
-  // ------------------------
-  // CATEGORY_MODAL tests
-  // ------------------------
   describe('CATEGORY_MODAL when data not provided', () => {
     beforeEach(async () => {
       component.typeModal = ModalsEnum.CATEGORY_DETAIL_MODAL;
@@ -131,7 +125,7 @@ describe('EditDetailModalPage', () => {
     beforeEach(async () => {
       component.typeModal = ModalsEnum.CATEGORY_DETAIL_MODAL;
       component.data = mockCategory;
-      component.index = 2; // <- índice correcto para el test
+      component.index = 2;
       component.countCategories = 2;
       await component.ngOnInit();
     });

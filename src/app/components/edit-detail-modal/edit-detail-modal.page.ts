@@ -17,6 +17,7 @@ export class EditDetailModalPage implements OnInit {
   @Input() data!: any;
   @Input() index: number = 0;
   @Input() countCategories: number = 0;
+  @Input() add: boolean = false;
   categories: Category[] = [];
 
   constructor(private modalCtrl: ModalController, private taskService: TaskService, private categoryService: CategoryService) { }

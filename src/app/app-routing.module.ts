@@ -1,14 +1,19 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { RouteAppEnum } from './core/enums/route.enum';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'tasks', pathMatch: 'full' },
+  { path: '', redirectTo: RouteAppEnum.HOME, pathMatch: 'full' },
   {
-    path: 'tasks',
+    path: RouteAppEnum.HOME,
+    loadChildren: () => import('./pages/home/home.module').then(m => m.HomePageModule)
+  },
+  {
+    path: RouteAppEnum.TASKS,
     loadChildren: () => import('./pages/tasks/tasks.module').then(m => m.TasksPageModule)
   },
   {
-    path: 'categories',
+    path: RouteAppEnum.CATEGORIES,
     loadChildren: () => import('./pages/categories/categories.module').then(m => m.CategoriesPageModule)
   },
 

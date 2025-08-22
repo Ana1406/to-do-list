@@ -3,7 +3,6 @@ import { CategoryService } from './category-service';
 import { StorageService } from '../storageService/storage-service';
 import { Category } from 'src/app/core/models/categories.model';
 
-// Creamos un mock del StorageService
 class MockStorageService {
   private store: { [key: string]: any } = {};
 

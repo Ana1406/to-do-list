@@ -7,8 +7,10 @@ import { Component, OnInit } from '@angular/core';
   standalone: false,
 })
 export class HomePage implements OnInit {
-  constructor() { }
+  dateToday: Date;
+  constructor() {
+    this.dateToday = new Date();
+  }
   ngOnInit() {
-    // Initialization logic can go here
   }
 }

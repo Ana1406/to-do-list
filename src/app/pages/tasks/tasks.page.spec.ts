@@ -10,7 +10,6 @@ import { FeatureFlagService } from 'src/app/services/featureFlagService/feature-
 import { TaskModel } from 'src/app/core/models/task.model';
 import { Category } from 'src/app/core/models/categories.model';
 
-// ==== MOCK SERVICES ==== //
 class MockTaskService {
   tasks: TaskModel[] = [{ title: 'Demo', completed: false, category: '' }];
   getTasks = jasmine.createSpy('getTasks').and.callFake(async () => this.tasks);

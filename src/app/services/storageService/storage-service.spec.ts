@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { Storage } from '@ionic/storage-angular';
 import { StorageService } from './storage-service';
-// Creamos un mock de Storage
 class StorageMock {
   private store: Record<string, any> = {};
 
@@ -38,7 +37,6 @@ describe('StorageService', () => {
     service = TestBed.inject(StorageService);
     storageMock = TestBed.inject(Storage) as unknown as StorageMock;
 
-    // Forzamos inicialización del storage
     await service['init']();
   });
 

@@ -9,18 +9,16 @@ export class TaskService {
   private readonly TASKS_KEY = 'tasks';
 
   constructor(private storageService: StorageService) { }
-  // Obtiene la lista de tareas almacenadas
+
   async getTasks(): Promise<TaskModel[]> {
     return (await this.storageService.getValue(this.TASKS_KEY)) || [];
   }
 
-  //Adiciona una nueva tarea a la lista
   async addTask(task: TaskModel): Promise<void> {
     const tasks = await this.getTasks();
     tasks.push(task);
     this.storageService.setValue(this.TASKS_KEY, tasks);
   }
-  // Elimina una tarea de la lista
   async deleteTask(index: number): Promise<void> {
     const tasks = await this.getTasks();
     if (index > -1 && index < tasks.length) {
@@ -28,7 +26,6 @@ export class TaskService {
       this.storageService.setValue(this.TASKS_KEY, tasks);
     }
   }
-  //Actualiza una tarea existente
   async updateTask(index: number, updatedTask: TaskModel): Promise<void> {
     const tasks = await this.getTasks();
     if (index > -1 && index < tasks.length) {

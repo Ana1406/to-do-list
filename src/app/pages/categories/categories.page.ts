@@ -13,40 +13,43 @@ import { CategoryService } from 'src/app/services/categoryService/category-servi
 export class CategoriesPage implements OnInit {
   categories: Category[] = [];
   allCategories: Category[] = [];
-  newTaskTitle: string = '';
-  loadBatchSize = 10;   // Cantidad a cargar por scroll
+  newCategoryTitle: string = '';
+  loadBatchSize = 10;
   loadedCount = 0;
   dateToday: Date;
   modalsEnum = ModalsEnum;
-  constructor(private categoryService: CategoryService, private modalCtrl: ModalController, private cd: ChangeDetectorRef) {
+
+  constructor(
+    private categoryService: CategoryService,
+    private modalCtrl: ModalController,
+    private cd: ChangeDetectorRef) {
     const today = new Date();
     this.dateToday = new Date();
   }
 
   async ngOnInit() {
     this.allCategories = await this.categoryService.getCategories();
-    //this.newTaskTitle = 'prueba1';
-    //this.addTask()
     this.loadMore();
   }
+
   trackByIndex(index: number, item: any): number {
     return index;
   }
   async addTask() {
-    if (this.newTaskTitle.trim().length > 0) {
-      const newCategory: Category = {
-        id: this.allCategories.length + 1,
-        name: '',
-        description: ''
-      };
 
-      await this.categoryService.addCategory(newCategory);
-      this.allCategories = await this.categoryService.getCategories();
-      this.newTaskTitle = '';
-    }
+    const newCategory: Category = {
+      id: this.allCategories.length + 1,
+      name: '',
+      description: ''
+    };
+
+    await this.categoryService.addCategory(newCategory);
+    this.allCategories = await this.categoryService.getCategories();
+    this.newCategoryTitle = '';
+
   }
 
-  async deleteTask(index: number) {
+  async deleteCategory(index: number) {
     await this.categoryService.deleteCategory(index);
     this.categories = await this.categoryService.getCategories();
   }
@@ -54,15 +57,17 @@ export class CategoriesPage implements OnInit {
   async openModal(category?: Category, indexCategory?: number) {
     const modal = await this.modalCtrl.create({
       component: EditDetailModalPage,
-      componentProps: { typeModal: this.modalsEnum.CATEGORY_DETAIL_MODAL, data: category, index: indexCategory, countCategories: this.allCategories.length },
+      componentProps: {
+        typeModal: this.modalsEnum.CATEGORY_DETAIL_MODAL,
+        data: category || {},
+        index: indexCategory,
+        countCategories: this.allCategories.length, add: category === undefined
+      },
 
     });
 
     await modal.present();
-
-    // Esperar hasta que se cierre el modal
     const { data } = await modal.onDidDismiss();
-
     if (data?.updated) {
       this.allCategories = await this.categoryService.getCategories();
       this.categories = [];
@@ -72,6 +77,7 @@ export class CategoriesPage implements OnInit {
     }
 
   }
+
   loadMore(event?: any) {
     const nextBatch = this.allCategories.slice(this.loadedCount, this.loadedCount + this.loadBatchSize);
     this.categories = [...this.categories, ...nextBatch];

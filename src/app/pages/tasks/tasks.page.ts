@@ -18,13 +18,13 @@ export class TasksPage implements OnInit {
   allTasks: TaskModel[] = [];
   filteredTasks: TaskModel[] = [];
   newTaskTitle: string = '';
-  loadBatchSize = 10;   // Cantidad a cargar por scroll
+  loadBatchSize = 10;
   loadedCount = 0;
   dateToday: string;
   modalsEnum = ModalsEnum;
   selectedCategory: string = '';
   showCategories = false;
-  itemBackgroundColor: string = '#ffffff'; // <-- ¡Mantiene esta propiedad!
+  itemBackgroundColor: string = '#ffffff';
   categories: Category[] = [];
   constructor(private taskService: TaskService,
     private modalCtrl: ModalController,
@@ -98,17 +98,21 @@ export class TasksPage implements OnInit {
   async openModal(task?: TaskModel, indexTask?: number) {
     const modal = await this.modalCtrl.create({
       component: EditDetailModalPage,
-      componentProps: { typeModal: this.modalsEnum.TASK_DETAIL_MODAL, data: task, index: indexTask },
-
+      componentProps: {
+        typeModal: this.modalsEnum.TASK_DETAIL_MODAL,
+        data: task || {},
+        index: indexTask,
+        add: task === undefined
+      },
     });
 
     await modal.present();
 
-    // Esperar hasta que se cierre el modal
     const { data } = await modal.onDidDismiss();
 
     if (data?.updated) {
       this.allTasks = await this.taskService.getTasks();
+      await this.loadTasks();
       this.tasks = [];
       this.loadedCount = 0;
       this.loadMore();

@@ -6,16 +6,17 @@
     <ion-title>
       <div>
         <h3 class="ion-text-uppercase">To Do List App</h3>
-        <p>Fecha Actual: {{ dateToday | date:'longDate' }}</p>
+        <p>Fecha actual: {{ dateToday | date:'longDate' }}</p>
       </div>
     </ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content [fullscreen]="true">
+  <ion-title class="ion-text-center ion-text-uppercase ion-padding-vertical mt-4">Categorías</ion-title>
   @if(categories.length === 0) {
   <div class="ion-text-center ion-padding">
-    <h2>No hay categorias disponibles</h2>
-    <p>Agrega nuevas categorias para organizar tus tareas diarias.</p>
+    <h2>No hay Categorías disponibles</h2>
+    <p>Agrega nuevas Categorías para organizar tus tareas diarias.</p>
   </div>
   }@else{
   <ion-list>
@@ -28,18 +29,15 @@
       </ion-label>
     </ion-item>
     }
-
   </ion-list>
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadMore($event)">
     <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más elementos...">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
   }
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" title="Agregar nueva categoria">
+  <ion-fab vertical="bottom" horizontal="end" slot="fixed" title="Agregar nueva Categoría">
     <ion-fab-button color="primary" (click)="openModal()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>
-
-
 </ion-content>

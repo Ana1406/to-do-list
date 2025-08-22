@@ -1,5 +1,9 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
 :root {
-    --ion-margin :2px
+    --ion-margin: 2px --ion-color-text: #333;
+    --ion-color-category-text: #666;
+    --ion-color-completed-text: #f1eaea;
+    --ion-color-completed-background: rgb(90, 92, 90);
+    --ion-border-completed-task: 2px solid rgb(71, 72, 71);
 }
