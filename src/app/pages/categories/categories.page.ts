@@ -16,11 +16,11 @@ export class CategoriesPage implements OnInit {
   newTaskTitle: string = '';
   loadBatchSize = 10;   // Cantidad a cargar por scroll
   loadedCount = 0;
-  dateToday: string;
+  dateToday: Date;
   modalsEnum = ModalsEnum;
   constructor(private categoryService: CategoryService, private modalCtrl: ModalController, private cd: ChangeDetectorRef) {
     const today = new Date();
-    this.dateToday = today.toLocaleDateString();
+    this.dateToday = new Date();
   }
 
   async ngOnInit() {
@@ -33,7 +33,6 @@ export class CategoriesPage implements OnInit {
     return index;
   }
   async addTask() {
-    console.log('Adding task:', this.newTaskTitle);
     if (this.newTaskTitle.trim().length > 0) {
       const newCategory: Category = {
         id: this.allCategories.length + 1,

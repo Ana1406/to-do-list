@@ -20,7 +20,6 @@ export class CategoryService {
     const categories = await this.getCategories();
     categories.push(category);
     await this.storageService.setValue(this.CATEGORIES_KEY, categories);
-    console.log('Category added:', category);
   }
 
   // Actualizar categoría por índice
@@ -29,7 +28,6 @@ export class CategoryService {
     if (index > -1 && index < categories.length) {
       categories[index] = updatedCategory;
       await this.storageService.setValue(this.CATEGORIES_KEY, categories);
-      console.log('Category updated at index:', index);
     }
   }
 
@@ -39,7 +37,6 @@ export class CategoryService {
     if (index > -1 && index < categories.length) {
       categories.splice(index, 1);
       await this.storageService.setValue(this.CATEGORIES_KEY, categories);
-      console.log('Category deleted at index:', index);
     }
   }
 

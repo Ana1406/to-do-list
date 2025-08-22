@@ -17,9 +17,7 @@ export class TaskService {
   //Adiciona una nueva tarea a la lista
   async addTask(task: TaskModel): Promise<void> {
     const tasks = await this.getTasks();
-    console.log('Adding task:', task);
     tasks.push(task);
-    console.log('Updated tasks:', tasks);
     this.storageService.setValue(this.TASKS_KEY, tasks);
   }
   // Elimina una tarea de la lista
@@ -29,7 +27,6 @@ export class TaskService {
       tasks.splice(index, 1);
       this.storageService.setValue(this.TASKS_KEY, tasks);
     }
-    console.log('Task deleted at index:', index);
   }
   //Actualiza una tarea existente
   async updateTask(index: number, updatedTask: TaskModel): Promise<void> {
@@ -41,6 +38,5 @@ export class TaskService {
   }
   async deleteAllTasks(): Promise<void> {
     await this.storageService.removeValue(this.TASKS_KEY);
-    console.log('All tasks deleted');
   }
 }

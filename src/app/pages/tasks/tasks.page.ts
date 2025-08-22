@@ -38,9 +38,7 @@ export class TasksPage implements OnInit {
   async ngOnInit() {
     await this.featureFlagService.loadFlags();
     this.showCategories = this.featureFlagService.isCategoriesEnabled();
-    console.log('Feature flag for categories:', this.showCategories);
     this.itemBackgroundColor = this.featureFlagService.getItemBackgroundColor();
-    console.log('Item background color from Remote Config:', this.itemBackgroundColor); // Para depurar
 
 
 
@@ -67,7 +65,6 @@ export class TasksPage implements OnInit {
   }
 
   async addTask() {
-    console.log('Adding task:', this.newTaskTitle);
     if (this.newTaskTitle.trim().length > 0) {
       const newTask: TaskModel = {
         title: this.newTaskTitle,
@@ -95,7 +92,6 @@ export class TasksPage implements OnInit {
 
   changeStateTask(task: TaskModel) {
     task.completed = !task.completed;
-    console.log('Cambio de estado de tarea');
     this.taskService.updateTask(this.tasks.indexOf(task), task)
 
   }
